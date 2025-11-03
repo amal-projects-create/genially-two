@@ -32,8 +32,9 @@
 
         .container {
             width: 90%;
-            max-width: 600px;
-            background: rgba(255, 255, 255, 0.85);
+            max-width: 650px;
+            /* Slightly wider to accommodate example */
+            background: rgba(255, 255, 255, 0.88);
             backdrop-filter: blur(12px);
             border-radius: 25px;
             border: 2px solid rgba(255, 255, 255, 0.5);
@@ -63,7 +64,23 @@
         p {
             color: #4a5568;
             font-size: 1rem;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+        }
+
+        .mnemonic-example {
+            background: rgba(66, 153, 225, 0.1);
+            color: #2c5282;
+            padding: 12px 15px;
+            border-radius: 12px;
+            margin: 0 auto 20px auto;
+            font-size: 0.95rem;
+            max-width: 90%;
+            border: 1px solid rgba(66, 153, 225, 0.2);
+            font-weight: 600;
+        }
+
+        .mnemonic-example b {
+            color: #3182ce;
         }
 
         .grid {
@@ -197,7 +214,11 @@
 <body>
     <div class="container">
         <h1>My Seasons Helper!</h1>
-        <p>Let's learn the seasons! Type a word for each picture below.</p>
+        <p>Let's learn the seasons! Type a word for each picture that starts with the right letter.</p>
+
+        <div class="mnemonic-example">
+            💡 Example: "<b>S</b>illy <b>S</b>quirrels <b>A</b>te <b>W</b>alnuts"
+        </div>
 
         <div class="grid" id="blanks"></div>
 
@@ -279,9 +300,9 @@
                 }
             });
             if (correct === SEASONS.length) {
-                result.textContent = `Great job! Mnemonic: "${allWords.join(' ')}"`;
+                result.textContent = `Great job! "${allWords.join(' ')}"`;
             } else if (inputs.length > 0 && Array.from(inputs).some(inp => inp.value.trim() !== '')) {
-                result.textContent = `${correct} / ${SEASONS.length} words are correct!`;
+                result.textContent = `Keep trying! ${correct} / ${SEASONS.length} words are correct.`;
             } else {
                 result.textContent = '';
             }
@@ -295,11 +316,11 @@
                 ind.textContent = '✓';
                 ind.className = 'indicator ok';
             });
-            result.textContent = 'Here are the seasons!';
+            result.textContent = 'Here are the four seasons!';
         }
 
         function reset() {
-            createBlanks(); // Re-create the blanks to clear everything
+            createBlanks();
             result.textContent = '';
         }
 
@@ -310,7 +331,6 @@
         revealBtn.addEventListener('click', reveal);
         resetBtn.addEventListener('click', reset);
 
-        // Also check on keyup for instant feedback
         blanks.addEventListener('keyup', (e) => {
             if (e.target.classList.contains('word')) {
                 check();
